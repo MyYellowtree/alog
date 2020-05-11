@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoke.alog.mapper.UserMapper">
+
+    <sql id="Base_Column_List">
+        id, account, password, avatar, nickname, sex, birthday, profile, count_subscriptions, count_fans
+    </sql>
+    <sql id="table_name">
+        user
+    </sql>
+
+    <insert id="insertUser" parameterType="com.xiaoke.alog.entity.User">
+        INSERT INTO <include refid="table_name"/>(<include refid="Base_Column_List"/>)
+        VALUES(#{id}, #{account}, #{password}, #{avatar}, #{nickname}, #{sex}, #{birthday}, #{profile}, #{countSubscriptions}, #{countFans})
+    </insert>
+
+    <select id="accountExist" resultType="java.lang.Boolean" >
+        SELECT COUNT(1)
+        FROM <include refid="table_name"/>
+        WHERE account = #{account}
+    </select>
+
+    <select id="selectByAccount" resultType="com.xiaoke.alog.entity.User">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="table_name"/>
+        WHERE account = #{account}
+    </select>
+
+</mapper>
